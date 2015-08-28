@@ -1,6 +1,6 @@
 import './preroll/index.js';
 
-var staticCacheName = 'wittr-static-v2';
+var staticCacheName = 'wittr-static-v3';
 
 self.addEventListener('install', function(event) {
   event.waitUntil(
@@ -40,5 +40,8 @@ self.addEventListener('fetch', function(event) {
   );
 });
 
-// TODO: listen for the "message" event, and call
-// skipWaiting if you get the appropriate message
+self.addEventListener('message', function(event) {
+  if (event.data.action === 'skipWaiting') {
+    self.skipWaiting();
+  }
+});
