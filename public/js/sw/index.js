@@ -1,9 +1,9 @@
 import './preroll/index.js';
 
 self.addEventListener('fetch', function(event) {
+  // TODO: only respond to requests with a
+  // url ending in ".jpg"
   event.respondWith(
-    new Response('<strong class="a-winner-is-me">Hello!</strong>', {
-      headers: {'Content-Type': 'text/html'}
-    })
+    fetch('/imgs/dr-evil.gif')
   );
 });
