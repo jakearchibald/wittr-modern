@@ -1,6 +1,6 @@
 import './preroll/index.js';
 
-var staticCacheName = 'wittr-static-v4';
+var staticCacheName = 'wittr-static-v5';
 
 self.addEventListener('install', function(event) {
   event.waitUntil(
