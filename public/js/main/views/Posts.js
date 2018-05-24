@@ -1,5 +1,4 @@
 import postTemplate from './../../../../templates/post.hbs';
-import toArray from 'lodash/lang/toArray';
 import parseHTML from './../../utils/parseHTML';
 import humanReadableTimeDiff from './../../utils/humanReadableTimeDiff';
 
@@ -13,7 +12,7 @@ export default function Posts(container) {
   this._lastTimeUpdate = 0;
   this._newPostAlert = container.querySelector('.posts-alert');
   this._scrollUpdatePending = false;
-  
+
   this._timesUpdate();
 
   // update times on an interval
@@ -34,7 +33,7 @@ export default function Posts(container) {
   });
 }
 
-// update all the <time> elements, unless we've 
+// update all the <time> elements, unless we've
 // already done so within the last 10 seconds
 Posts.prototype._softTimesUpdate = function() {
   if (Date.now() - this._lastTimeUpdate < 1000 * 10) return;
@@ -43,7 +42,7 @@ Posts.prototype._softTimesUpdate = function() {
 
 // update all the <time> elements
 Posts.prototype._timesUpdate = function() {
-  var postTimeEls = toArray(this._container.querySelectorAll('.post-time'));
+  var postTimeEls = Array.from(this._container.querySelectorAll('.post-time'));
   postTimeEls.forEach(function(timeEl) {
     var postDate = new Date(timeEl.getAttribute('datetime'));
     timeEl.textContent = humanReadableTimeDiff(postDate);
@@ -71,9 +70,9 @@ Posts.prototype.addPosts = function(messages) {
   // add to the dom
   var nodes = parseHTML(htmlString);
   this._scroller.insertBefore(nodes, this._scroller.firstChild);
-  
+
   // remove really old posts to avoid too much content
-  var posts = toArray(this._scroller.querySelectorAll('.post'));
+  var posts = Array.from(this._scroller.querySelectorAll('.post'));
 
   posts.slice(maxMessages).forEach(function(post) {
     post.parentNode.removeChild(post);

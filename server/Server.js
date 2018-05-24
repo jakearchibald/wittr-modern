@@ -9,7 +9,7 @@ import http from 'http';
 import url from 'url';
 import net from 'net';
 import Throttle from 'throttle';
-import random from 'lodash/number/random';
+import random from 'lodash/random';
 import indexTemplate from './templates/index';
 import postsTemplate from './templates/posts';
 import postTemplate from './templates/post';
@@ -65,7 +65,7 @@ export default class Server {
       server: this._appServer,
       path: '/updates'
     });
-    
+
     const staticOptions = {
       maxAge: 0
     };
@@ -189,7 +189,7 @@ export default class Server {
   _onWsConnection(socket) {
     const requestUrl = url.parse(socket.upgradeReq.url, true);
 
-    if ('no-socket' in requestUrl.query) return; 
+    if ('no-socket' in requestUrl.query) return;
 
     this._sockets.push(socket);
 

@@ -1,8 +1,6 @@
 import parseHTML from './../../utils/parseHTML';
 import toastTemplate from './../../../../templates/toast.hbs';
-import defaults from 'lodash/object/defaults';
 import transition from 'simple-transition';
-import closest from 'closest';
 
 function Toast(text, duration, buttons) {
   var toast = this;
@@ -27,7 +25,7 @@ function Toast(text, duration, buttons) {
   }
 
   this.container.addEventListener('click', function(event) {
-    var button = closest(event.target, 'button', true);
+    var button = event.target.closest('button');
     if (!button) return;
     toast._answerResolver(button.textContent);
     toast.hide();
@@ -41,7 +39,7 @@ Toast.prototype.hide = function() {
   transition(this.container, {
     opacity: 0
   }, 0.3, 'ease-out').then(this._goneResolver);
-  
+
   return this.gone;
 };
 
@@ -56,7 +54,7 @@ export default function Toasts(appendToEl) {
 // })
 // Returns a toast.
 Toasts.prototype.show = function(message, opts) {
-  opts = defaults({}, opts, {
+  opts = Object.assign({}, opts, {
     duration: 0,
     buttons: ['dismiss']
   });

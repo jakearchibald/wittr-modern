@@ -15,7 +15,7 @@ function openDb(name) {
   });
 }
 
-// This lets the settings server execute code in the 
+// This lets the settings server execute code in the
 // context of the app server.
 // This is so the settings server can confirm tasks
 // have been completed sucessfully
