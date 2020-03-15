@@ -31,7 +31,7 @@
     "idb": "^2.1.2",
     "lodash": "^4.17.10",
     "markov": "0.0.7",
-    "minimist": "^1.2.0",
+    "minimist": "^1.2.2",
     "rollup-plugin-commonjs": "^8.4.1",
     "rollup-plugin-handlebars-plus": "^0.2.3",
     "rollup-plugin-node-resolve": "^3.3.0",
