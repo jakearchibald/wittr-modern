@@ -29,7 +29,7 @@
     "gulp-sourcemaps": "^2.6.4",
     "gulp-util": "^3.0.8",
     "idb": "^2.1.2",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.21",
     "markov": "0.0.7",
     "minimist": "^1.2.0",
     "rollup-plugin-commonjs": "^8.4.1",
