@@ -102,7 +102,10 @@ export default class Server {
     this._app.get('/photos/:farm-:server-:id-:secret-:type.jpg', (req, res) => {
       const flickrUrl = `http://farm${req.params.farm}.staticflickr.com/${req.params.server}/${req.params.id}_${req.params.secret}_${imgSizeToFlickrSuffix[req.params.type]}.jpg`;
       const flickrRequest = http.request(flickrUrl, flickrRes => {
-        flickrRes.pipe(res);
+        Object.keys(flickrRes.headers).forEach((header) => {
+          res.setHeader(header, flickrRes.headers[header]);
+        });
+        res.sendStatus(301)
       });
 
       flickrRequest.on('error', err => {
