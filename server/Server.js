@@ -85,6 +85,7 @@ export default class Server {
     this._app.get('/', (req, res) => {
       res.send(indexTemplate({
         title: 'Wittr',
+        manifest: '<link rel="manifest" href="/manifest.json">',
         scripts: '<script src="/js/main.js" defer></script>',
         content: postsTemplate({
           content: this._messages.map(item => postTemplate(item)).join('')
