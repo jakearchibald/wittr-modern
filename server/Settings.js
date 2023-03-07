@@ -30,6 +30,7 @@ export default class Server extends EventEmitter {
 
     this._app.get('/', compressor, (req, res) => {
       res.send(indexTemplate({
+        title: 'Wittr Config',
         scripts: '<script src="/js/settings.js" defer></script>',
         extraCss: '<link rel="stylesheet" href="/css/settings.css" />',
         content: settingsTemplate({
