@@ -4,7 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import os from 'os';
 import compression from 'compression';
-import {Server as WebSocketServer} from 'ws';
+import { Server as WebSocketServer } from 'ws';
 import http from 'http';
 import url from 'url';
 import net from 'net';
@@ -15,7 +15,7 @@ import postsTemplate from './templates/posts';
 import postTemplate from './templates/post';
 import remoteExecutorTemplate from './templates/remote-executor';
 import idbTestTemplate from './templates/idb-test';
-import {generateReady, generateMessage} from './generateMessage';
+import { generateReady, generateMessage } from './generateMessage';
 
 const maxMessages = 30;
 
@@ -28,9 +28,9 @@ const appServerPath = os.platform() == 'win32' ?
   'offlinefirst.sock';
 
 const connectionProperties = {
-  perfect: {bps: 100000000, delay: 0},
-  slow: {bps: 4000, delay: 3000},
-  'lie-fi': {bps: 1, delay: 10000}
+  perfect: { bps: 100000000, delay: 0 },
+  slow: { bps: 4000, delay: 3000 },
+  'lie-fi': { bps: 1, delay: 10000 }
 };
 
 const imgSizeToFlickrSuffix = {
@@ -84,6 +84,8 @@ export default class Server {
 
     this._app.get('/', (req, res) => {
       res.send(indexTemplate({
+        title: 'Wittr',
+        manifest: '<link rel="manifest" href="/manifest.json">',
         scripts: '<script src="/js/main.js" defer></script>',
         content: postsTemplate({
           content: this._messages.map(item => postTemplate(item)).join('')
@@ -101,7 +103,10 @@ export default class Server {
     this._app.get('/photos/:farm-:server-:id-:secret-:type.jpg', (req, res) => {
       const flickrUrl = `http://farm${req.params.farm}.staticflickr.com/${req.params.server}/${req.params.id}_${req.params.secret}_${imgSizeToFlickrSuffix[req.params.type]}.jpg`;
       const flickrRequest = http.request(flickrUrl, flickrRes => {
-        flickrRes.pipe(res);
+        Object.keys(flickrRes.headers).forEach((header) => {
+          res.setHeader(header, flickrRes.headers[header]);
+        });
+        res.sendStatus(301)
       });
 
       flickrRequest.on('error', err => {
@@ -116,7 +121,7 @@ export default class Server {
 
     this._app.get('/ping', (req, res) => {
       res.set('Access-Control-Allow-Origin', '*');
-      res.status(200).send({ok: true});
+      res.status(200).send({ ok: true });
     });
 
     this._app.get('/remote', (req, res) => {

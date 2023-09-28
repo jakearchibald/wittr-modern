@@ -8,6 +8,7 @@ const resolve = require('rollup-plugin-node-resolve');
 const commonjs = require('rollup-plugin-commonjs');
 const hbs = require('rollup-plugin-handlebars-plus');
 const through = require('through2');
+const sass = require('gulp-sass')(require('sass'));
 
 const args = process.argv.slice(3);
 
@@ -28,9 +29,9 @@ gulp.task('copy', copy);
 
 function css() {
   return gulp.src('public/scss/*.scss')
-    .pipe(plugins.sass.sync().on('error', plugins.sass.logError))
+    .pipe(sass.sync().on('error', sass.logError))
     .pipe(plugins.sourcemaps.init())
-    .pipe(plugins.sass({ outputStyle: 'compressed' }))
+    .pipe(sass({ outputStyle: 'compressed' }))
     .pipe(plugins.sourcemaps.write('./'))
     .pipe(gulp.dest('build/public/css/'));
 }
